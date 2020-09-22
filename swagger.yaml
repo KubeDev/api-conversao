@@ -6,7 +6,7 @@ info:
   contact:
     email: "fabricio@veronez.dev"
 paths:
-  /temperatura/fahrenheitparacelsius/{valor}:
+  /fahrenheit/{valor}/celsius:
     get:
       description: "Converte de Fahrenheit para Celsius"
       produces:
@@ -27,7 +27,7 @@ paths:
         "400":
           description: "Bad Input Parameter"
 
-  /temperatura/celsiusparafahrenheit/{valor}:
+  /celsius/{valor}/fahrenheit:
     get:
       description: "Converte de Celsius para Fahrenheit"
       produces:

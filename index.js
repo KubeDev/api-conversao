@@ -7,14 +7,14 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); 
 
-app.get('/temperatura/fahrenheitparacelsius/:valor', (req, res) => {
+app.get('/fahrenheit/:valor/celsius', (req, res) => {
 
     let valor = req.params.valor;
     let celsius = (valor - 32) * 5 / 9;
     res.json({ "celsius": celsius, "maquina": os.hostname() });
 });
 
-app.get('/temperatura/celsiusparafahrenheit/:valor', (req, res) => {
+app.get('/celsius/:valor/fahrenheit', (req, res) => {
 
     let valor = req.params.valor;
     let fahrenheit = (valor * 9 / 5) + 32;
