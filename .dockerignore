@@ -1,0 +1,2 @@
+# Removing node_modules pior to copy to container image
+node_modules
