@@ -7,7 +7,7 @@ let isRead = () => {
     return readTime < new Date(Date.now());
 };
 
-router.get('/read', (req, res) => {
+router.get('/ready', (req, res) => {
    
     if (isRead()) {
         res.statusCode = 200;
@@ -18,13 +18,18 @@ router.get('/read', (req, res) => {
     }   
 });
 
+router.get('/health', (req, res) => {
+   
+    res.send("OK");
+});
+
 router.put('/unhealth', (req, res) => {
 
     isHealth = false;
     res.send("OK");
 });
 
-router.put('/unreadfor/:seconds', (req, res) => {
+router.put('/unreadyfor/:seconds', (req, res) => {
     
     const dado = new Date(new Date(Date.now()).getTime() + (1000 * req.params.seconds));
     readTime = dado;    
