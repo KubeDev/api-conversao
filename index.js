@@ -4,6 +4,9 @@ const app = express();
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
+const config = require('./config/system-life');
+
+app.use('/', config.routers);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); 
 
@@ -28,7 +31,6 @@ app.get('/temperatura/fahrenheitparacelsius/:valor', (req, res) => {
     res.json({ "celsius": celsius });
 });
 
-
 app.get('/temperatura/celsiusparafahrenheit/:valor', (req, res) => {
 
     let valor = req.params.valor;
@@ -36,6 +38,15 @@ app.get('/temperatura/celsiusparafahrenheit/:valor', (req, res) => {
     res.json({ "fahrenheit": fahrenheit });
 });
 
+app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/:ciclos', (req, res) => {
+
+    const elemento = req.params.elemento;
+    const tempoStress = req.params.tempoStress * 1000;
+    const tempoFolga = req.params.tempoFolga * 1000;
+    const ciclos = req.params.ciclos;
+    new NodeHog(elemento, tempoStress, tempoFolga, ciclos).start();
+    res.send("OK");
+});
 
 app.listen(8080, () => {
     console.log("Servidor rodando na porta 8080");
