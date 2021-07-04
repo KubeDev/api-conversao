@@ -17,7 +17,9 @@ spec:
         image: brunobotelhobr/api_conversao:latest
         ports:
         - containerPort: 8080
-
+        livenessProbe:
+          path: /health
+          port: 8080
 ---
 
 apiVersion: v1
