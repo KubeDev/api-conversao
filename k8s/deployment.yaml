@@ -53,3 +53,17 @@ spec:
   - port: 80
     targetPort: 8080
   type: LoadBalancer
+
+--- 
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 75
