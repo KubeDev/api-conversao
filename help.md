@@ -4,10 +4,10 @@
     http://localhost:8080/api-docs
 
 #To Force down on application
-    http://localhost:8080/unhealth
+    curl -v -X PUT http://localhost:8080/unhealth
 
 #To Force down on application
-    http://localhost:8080/unreadyfor/30
+    curl -v -X PUT http://localhost:8080/unreadyfor/30
 
 #To Create your Image
     docker image build -t brunobotelhobrapi-conversao:v1 .
