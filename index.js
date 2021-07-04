@@ -8,7 +8,7 @@ const config = require('./config/system-life');
 const NodeHog = require('nodehog');
 
 app.use(config.middlewares.healthMid);
-app.use('/', config.routers);
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); 
 
 app.get('/fahrenheit/:valor/celsius', (req, res) => {
