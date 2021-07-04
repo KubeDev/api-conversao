@@ -33,9 +33,15 @@ spec:
           timeoutSeconds: 1
           successThreshold: 1
           failureThreshold: 1
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "32Mi"
+          limits:
+            cpu: "400m"
+            memory: "64Mi"
 
 --- 
-
 apiVersion: v1
 kind: Service
 metadata:
