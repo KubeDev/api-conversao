@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
       - name: api
-        image: brunobotelhobr/rotten-potatos:latest
+        image: brunobotelhobr/api_conversao:latest
         ports:
         - containerPort: 8080
-        
+
 ---
 
 apiVersion: v1
