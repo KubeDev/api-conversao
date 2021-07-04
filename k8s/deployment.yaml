@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: api
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: api
@@ -28,6 +28,6 @@ spec:
   selector:
     app: api
   ports:
-  - port: 8080
+  - port: 80
     targetPort: 8080
-  type: ClusterIP
+  type: LoadBalancer
