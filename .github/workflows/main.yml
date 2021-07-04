@@ -32,8 +32,8 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.6.1
         with: 
-          context: ./$GITHUB_WORKSPACE
-          file: ./$GITHUB_WORKSPACE/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: true
           tags: |
             brunobotelhobr/api_conversao:latest
