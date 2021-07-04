@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apiconversao
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apiconversao
+  template:
+    metadata:
+      labels:
+        app: apiconversao
+    spec:
+      containers:
+        - name: apiconversao
+          image: mateussms/api-conversao:v1
+          ports:
+            - containerPort: 8080
