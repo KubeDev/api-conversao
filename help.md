@@ -9,6 +9,9 @@
 #To Force down on application
     curl -v -X PUT http://localhost:8080/unreadyfor/30
 
+#To Stresstest
+    curl -v -X PUT http://localhost:8080/stress/cpu/tempostress/60/intervalo/1/ciclos/2
+
 #To Create your Image
     docker image build -t brunobotelhobrapi-conversao:v1 .
 
