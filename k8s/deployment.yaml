@@ -17,7 +17,7 @@ spec:
         image: brunobotelhobr/rotten-potatos:latest
         ports:
         - containerPort: 8080
-
+        
 ---
 
 apiVersion: v1
