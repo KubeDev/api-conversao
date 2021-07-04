@@ -48,17 +48,9 @@ jobs:
         uses: Azure/k8s-set-context@v1.1
         with:
           method: kubeconfig
-          kubeconfig: ${{ secrets.K8S_CONFIG }}
-      - name: Deploy Mongo
+          kubeconfig: ${{ secrets.K8S }}
+      - name: Deploy K8s
         uses: Azure/k8s-deploy@v1
         with:        
           manifests: |
-            k8s/mongodb/deployment.yaml
-            k8s/mongodb/service.yaml
-
-      - name: Deploy Web
-        uses: Azure/k8s-deploy@v1
-        with:        
-          manifests: |
-            k8s/web/deployment.yaml
-          images: brunobotelhobr/api_conversao:${{ github.run_number }}
+            k8s/deployment.yaml
