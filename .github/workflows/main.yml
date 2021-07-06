@@ -52,7 +52,7 @@ jobs:
           output: 'trivy-results.sarif'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
           exit-code: '1'
-          ignore-unfixed: false
+          ignore-unfixed: 'false
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
 
       - name: Upload Image scan results to GitHub Security tab
