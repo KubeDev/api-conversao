@@ -22,10 +22,31 @@ jobs:
       contents: read
       security-events: write
       
+   strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript' ]
+        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
+        # Learn more:
+        # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
+
     steps:
-    
       - name: Download Code
         uses: actions/checkout@v2
+
+      - name: Initialize CodeQL Scan
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Build
+        - run: |
+          apt-get update
+          apt-get install node
+          npm install
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
       
       - name: Docker Login
         uses: docker/login-action@v1.10.0      
