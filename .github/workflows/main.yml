@@ -1,19 +1,12 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI-CD
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   CI:
     runs-on: ubuntu-latest
@@ -21,39 +14,14 @@ jobs:
       actions: read
       contents: read
       security-events: write
-      
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'javascript' ]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
-        # Learn more:
-        # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
-
     steps:
       - name: Download Code
         uses: actions/checkout@v2
-
-      - name: Initialize CodeQL Scan
-        uses: github/codeql-action/init@v1
-        with:
-          languages: ${{ matrix.language }}
-
-      - name: Build
-        - run: |
-          apt-get update
-          apt-get install node
-          npm install
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
-      
       - name: Docker Login
         uses: docker/login-action@v1.10.0      
         with:
           username: ${{ secrets.DOCKERHUB_LOGIN }}
           password: ${{ secrets.DOCKERHUB_PASS }}
-          
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.6.1
         with: 
@@ -63,7 +31,6 @@ jobs:
           tags: |
             brunobotelhobr/api_conversao:latest
             brunobotelhobr/api_conversao:${{ github.run_number }}
-
       - name: Trivy Vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -74,7 +41,6 @@ jobs:
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
           exit-code: '1'
           ignore-unfixed: false
-
       - name: Upload Image scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v1
         with:
