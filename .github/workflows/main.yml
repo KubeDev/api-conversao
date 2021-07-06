@@ -38,41 +38,27 @@ jobs:
           tags: |
             brunobotelhobr/api_conversao:latest
             brunobotelhobr/api_conversao:${{ github.run_number }}
-      
-      - name: Aqua Security Trivy
-        uses: aquasecurity/trivy-action@0.0.18
-      # You may pin to the exact commit or the version.
-      # uses: aquasecurity/trivy-action@ac8de07fd168680dd0331bef43681c0e150e9ad1
-        with:
-          image-ref: 'docker.io/brunobotelhobr/api_conversao:${{ github.run_number }}'
-          exit-code: '1'
-          ignore-unfixed: false
-          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          output: 'trivy-results.txt'
 
       - name: Trivy Action
         # You may pin to the exact commit or the version.
         # uses: lazy-actions/gitrivy@6edf95fdc8b1fb841a974536316b209cd16f9000
-        uses: lazy-actions/gitrivy@v3
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
         with:
-          image: 'brunobotelhobr/api_conversao:${{ github.run_number }}'
-          # severities of vulnerabilities (separated by commma)
+          image-ref: 'brunobotelhobr/api_conversao:latest'
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          # Ignore unfixed vulnerabilities [true, false]
-          ignore_unfixed: 'false'
-          # Trivy --template option
-          template: # optional
-          # GitHub access token used to create a issue
-          token: '{{ secrets.GHTOKEN }}' 
-          # Issue title
-          issue_title: # optional, default is Security Alert
-          # Issue label (separated by commma)
-          issue_label: # optional, default is trivy,vulnerability
-          # Issue assignee (separated by commma)
-          issue_assignee: # optional
-          # Whether the action should fail if a vulnerability was found
-          fail_on_vulnerabilities: # optional, default is false
+          exit-code: '1'
+          ignore-unfixed: false
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
 
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: 'trivy-results.sarif'
+          
   CD:
     runs-on: ubuntu-latest
     needs: [CI]
