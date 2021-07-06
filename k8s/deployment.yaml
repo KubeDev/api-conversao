@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swagger
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: swagger
+  template:
+    metadata:
+      labels:
+        app: swagger
+    spec:
+      containers:
+        - name: site
+          image: cadu1982/api-conversao
+          ports:
+            - containerPort: 80
