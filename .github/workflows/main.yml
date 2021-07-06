@@ -45,14 +45,11 @@ jobs:
       # uses: aquasecurity/trivy-action@ac8de07fd168680dd0331bef43681c0e150e9ad1
         with:
           image-ref: 'docker.io/brunobotelhobr/api_conversao:${{ github.run_number }}'
-          format: 'table'
           exit-code: '1'
           ignore-unfixed: false
-          vuln-type: 'os,library'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
           output: 'trivy-results.txt'
 
-      
   CD:
     runs-on: ubuntu-latest
     needs: [CI]
