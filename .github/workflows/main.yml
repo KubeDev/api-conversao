@@ -35,7 +35,7 @@ jobs:
         id: run_horusec
         uses: fike/horusec-action@v0.1
         with:
-          arguments: -p="./" --ignore="**/.vscode/**, **/*.env, **/.vulnerable-files/**, **/tests/**"
+          arguments: -p="./" --information-severity=true --ignore="**/.vscode/**, **/*.env, **/.vulnerable-files/**, **/tests/**"
       - name: SCA - Trivy Vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
