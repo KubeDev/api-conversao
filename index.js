@@ -22,7 +22,7 @@ app.get('/fahrenheit/:valor/celsius', (req, res) => {
 app.get('/xss/:valor', (req, res) => {
 
     let valor = req.params.valor;
-    res.json({ "txt-input": valot, "maquina": os.hostname() });
+    res.json({ "txt-input": valor, "maquina": os.hostname() });
 });
 
 app.get('/celsius/:valor/fahrenheit', (req, res) => {
