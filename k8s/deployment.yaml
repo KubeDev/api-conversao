@@ -11,6 +11,10 @@ spec:
     metadata:
       labels:
         app: api
+      annotations:
+        prometeus.io/port: "8080"
+        prometeus.io/path: "/metrics"
+        prometeus.io/scrape: "true"
     spec:
       containers:
       - name: api
@@ -50,7 +54,7 @@ spec:
   selector:
     app: api
   ports:
-  - port: 80
+  - port: 32080
     targetPort: 8080
   type: LoadBalancer
 
