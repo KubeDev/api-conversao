@@ -13,7 +13,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/fahrenheit/:valor/celsius', (req, res) => {
 
-    let password = "teste";
     let valor = req.params.valor;
     let celsius = (valor - 32) * 5 / 9;
     res.json({ "celsius": celsius, "maquina": os.hostname() });
