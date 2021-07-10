@@ -1,0 +1,25 @@
+{
+  "name": "api-conversao",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KubeDev/api-conversao.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KubeDev/api-conversao/issues"
+  },
+  "homepage": "https://github.com/KubeDev/api-conversao#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodehog": "^0.1.2",
+    "swagger-ui-express": "^4.1.4",
+    "yamljs": "^0.3.0"
+  }
+}
