@@ -35,7 +35,11 @@ jobs:
         id: run_horusec
         uses: fike/horusec-action@v0.1
         with:
-          arguments: -p="./" --ignore="**/.vscode/**, **/*.env, **/.vulnerable-files/**, **/tests/**"
+          arguments: -p="./" --information-severity=true -o=sonarqube -O=sast.sarif --ignore="**/.vulnerable-files/**"
+      - name: Upload Issues - SAST - Horusec Vulnerability scanner
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: 'sast.sarif'
       - name: SCA - Trivy Vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -46,10 +50,11 @@ jobs:
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
           exit-code: 0
           ignore-unfixed: false
-      - name: Upload Image scan results to GitHub Security tab
+      - name: Upload Issues - SCA - Trivy Vulnerability scanner
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: 'trivy-results.sarif'
+
            
   CD:
     runs-on: ubuntu-latest
