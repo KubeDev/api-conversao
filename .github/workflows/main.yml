@@ -31,7 +31,12 @@ jobs:
           tags: |
             brunobotelhobr/api_conversao:latest
             brunobotelhobr/api_conversao:${{ github.run_number }}
-      - name: Trivy Vulnerability scanner
+      - name: SAST - Horusec Vulnerability scanner
+        id: run_horusec
+        uses: fike/horusec-action@v0.1
+        with:
+          arguments: -p="./" --ignore="**/.vscode/**, **/*.env, **/.vulnerable-files/**, **/tests/**"
+      - name: SCA - Trivy Vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'brunobotelhobr/api_conversao:latest'
