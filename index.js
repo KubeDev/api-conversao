@@ -19,7 +19,7 @@ app.get('/fahrenheit/:valor/celsius', (req, res) => {
 });
 
 app.get('/xss/:valor', (req, res) => {
-
+    let password = 'teste';
     let valor = req.params.valor;
     res.json({ "txt-input": valor, "maquina": os.hostname() });
 });
