@@ -108,3 +108,4 @@ dist
 
 # Serverless directories
 .horusec/
+.DS_Store

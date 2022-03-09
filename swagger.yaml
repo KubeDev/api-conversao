@@ -1,10 +1,10 @@
 swagger: "2.0"
 info:
   description: "API de conversão de temperatura"
-  version: "1.0.0"
+  version: "1.0.1"
   title: "Conversão de temperatura"
   contact:
-    email: "fabricio@veronez.dev"
+    email: "bruno.botlho.br@gmail.com"
 paths:
   /fahrenheit/{valor}/celsius:
     get:
