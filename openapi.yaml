@@ -74,6 +74,50 @@ paths:
         400:
           description: Bad Input Parameter
           content: {}
+  /stress/{elemento}/tempostress/{tempo_stress}/intervalo/{intervalo}/ciclos/{ciclos}:
+    put:
+      description: Used to create scheduled stress tests on a given target. Use cases
+        include testing program performance under max CPU or Memory load, testing
+        recovery from max load, and testing virtual autoscaling features such as the
+        Kubernetes horizontal pod autoscaler.
+      parameters:
+      - name: elemento
+        in: path
+        description: The type of resource to stress (memory | cpu)
+        required: true
+        schema:
+          type: string
+      - name: tempo_stress
+        in: path
+        description: The length of the stress period in seconds
+        required: true
+        schema:
+          type: number
+      - name: intervalo
+        in: path
+        description: he length of the relief period in seconds
+        required: true
+        schema:
+          type: number
+      - name: ciclos
+        in: path
+        description: The number of cycles to complete before NodeHog exits (1 cycle
+          = 1 lifespan + 1 deathspan)
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: Retorno
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/msg'
+        400:
+          description: Bad Input Parameter
+          content: {}
 components:
   schemas:
     Temperatura:
@@ -90,3 +134,27 @@ components:
         valor:
           type: string
           example: Azeitona
+    elemento:
+      type: object
+      properties:
+        valor:
+          type: string
+          example: cpu
+    tempo_stress:
+      type: object
+      properties:
+        valor:
+          type: number
+          example: 60.0
+    intervalo:
+      type: object
+      properties:
+        valor:
+          type: number
+          example: 1.0
+    ciclos:
+      type: object
+      properties:
+        valor:
+          type: number
+          example: 2.0

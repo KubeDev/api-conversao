@@ -24,6 +24,14 @@ app.get('/echo/:msg', (req, res) => {
     res.json({ "txt-input": msg, "maquina": os.hostname() });
 });
 
+app.get('/swagger.yaml', (req, res) => {
+    res.download(__dirname +'/swagger.yaml');
+});
+
+app.get('/openapi.yamll', (req, res) => {
+    res.download(__dirname +'/openapi.yaml');
+});
+
 app.get('/celsius/:valor/fahrenheit', (req, res) => {
 
     let valor = req.params.valor;
@@ -35,14 +43,14 @@ app.get('/temperatura/fahrenheitparacelsius/:valor', (req, res) => {
 
     let valor = req.params.valor;
     let celsius = (valor - 32) * 5 / 9;
-    res.json({ "celsius": celsius });
+    res.json({ "celsius": celsius, "maquina": os.hostname() });
 });
 
 app.get('/temperatura/celsiusparafahrenheit/:valor', (req, res) => {
 
     let valor = req.params.valor;
     let fahrenheit = (valor * 9 / 5) + 32;
-    res.json({ "fahrenheit": fahrenheit });
+    res.json({ "fahrenheit": fahrenheit, "maquina": os.hostname() });
 });
 
 app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/:ciclos', (req, res) => {
@@ -52,7 +60,11 @@ app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/
     const tempoFolga = req.params.tempoFolga * 1000;
     const ciclos = req.params.ciclos;
     new NodeHog(elemento, tempoStress, tempoFolga, ciclos).start();
-    res.send("OK");
+    res.json({"status": "Mission Accomplished" , "maquina": os.hostname() });
+});
+
+app.get('*', function(req, res) {
+    res.redirect('/api-docs');
 });
 
 app.listen(8080, () => {
