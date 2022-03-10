@@ -107,5 +107,4 @@ dist
 .tern-port
 
 # Serverless directories
-.horusec/
 .DS_Store
