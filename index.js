@@ -18,10 +18,10 @@ app.get('/fahrenheit/:valor/celsius', (req, res) => {
     res.json({ "celsius": celsius, "maquina": os.hostname() });
 });
 
-app.get('/xss/:valor', (req, res) => {
+app.get('/echo/:msg', (req, res) => {
     let password = 'teste';
-    let valor = req.params.valor;
-    res.json({ "txt-input": valor, "maquina": os.hostname() });
+    let msg = req.params.msg;
+    res.json({ "txt-input": msg, "maquina": os.hostname() });
 });
 
 app.get('/celsius/:valor/fahrenheit', (req, res) => {

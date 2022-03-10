@@ -48,6 +48,27 @@ paths:
         "400":
           description: "Bad Input Parameter"
 
+  /echo/{msg}:
+    get:
+      description: "Return a message"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "msg"
+        in: "path"
+        description: "Mensagem que será retornada"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Retorno"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/msg"
+        "400":
+          description: "Bad Input Parameter"
+
 definitions:
   Temperatura:
     type: "object"
@@ -57,3 +78,11 @@ definitions:
       valor:
         type: "number"
         example: 500.0
+  msg:
+    type: "object"
+    required:
+    - "msg"
+    properties:
+      valor:
+        type: "string"
+        example: Azeitona
