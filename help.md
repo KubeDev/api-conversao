@@ -1,7 +1,7 @@
 # To run
     npm install
     node index.js
-    http://localhost:8080/api-docs
+    http://localhost:8080/
 
 #To Force down on application
     curl -v -X PUT http://localhost:8080/unhealth
