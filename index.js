@@ -28,7 +28,7 @@ app.get('/swagger.yaml', (req, res) => {
     res.download(__dirname +'/swagger.yaml');
 });
 
-app.get('/openapi.yamll', (req, res) => {
+app.get('/openapi.yaml', (req, res) => {
     res.download(__dirname +'/openapi.yaml');
 });
 
