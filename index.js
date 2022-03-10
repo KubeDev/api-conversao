@@ -55,11 +55,11 @@ app.get('/temperatura/celsiusparafahrenheit/:valor', (req, res) => {
 
 app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/:ciclos', (req, res) => {
 
-    //const elemento = req.params.elemento;
-    //const tempoStress = req.params.tempoStress * 1000;
-    //const tempoFolga = req.params.tempoFolga * 1000;
-    //const ciclos = req.params.ciclos;
-    //new NodeHog(elemento, tempoStress, tempoFolga, ciclos).start();
+    const elemento = req.params.elemento;
+    const tempoStress = req.params.tempoStress * 1000;
+    const tempoFolga = req.params.tempoFolga * 1000;
+    const ciclos = req.params.ciclos;
+    new NodeHog(elemento, tempoStress, tempoFolga, ciclos).start();
     res.json({"status": "Mission Accomplished" , "maquina": os.hostname() });
 });
 
