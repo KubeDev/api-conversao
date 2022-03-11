@@ -63,10 +63,6 @@ app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/
     res.json({"status": "Mission Accomplished" , "maquina": os.hostname() });
 });
 
-app.get('/ready', (req, res) => {
-    res.json({ "status": "Up and Running" , "maquina": os.hostname()  });
-});
-
 app.listen(8080, () => {
     console.log("Servidor: rodando na porta 8080, vai que vai");
 });
