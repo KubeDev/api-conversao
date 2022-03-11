@@ -11,7 +11,7 @@ router.get('/ready', (req, res) => {
    
     if (isRead()) {
         res.statusCode = 200;
-        return res.send('Ok');
+        return res.send('yes');
     } else {
         res.statusCode = 500;
         return res.send('');
@@ -19,8 +19,13 @@ router.get('/ready', (req, res) => {
 });
 
 router.get('/health', (req, res) => {
-   
-    res.send("OK");
+    if (isHealth) {
+        next();
+        return res.send('yes');
+    } else {
+        res.statusCode = 500;
+        return res.send('no');
+    }  
 });
 
 router.put('/unhealth', (req, res) => {
@@ -36,15 +41,6 @@ router.put('/unreadyfor/:seconds', (req, res) => {
     res.send("OK");
 });
 
-var healthMid = function (req, res, next) {
-    
-    if (isHealth) {
-        next();
-    } else {
-        res.statusCode = 500;
-        return res.send('');
-    }   
-};
 
 exports.routers = router;
 exports.middlewares = { healthMid};

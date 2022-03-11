@@ -3,66 +3,84 @@ const os = require('os')
 const app = express();
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./swagger.yaml');
+const swaggerDocument = YAML.load('./docs/swagger.yaml');
 const config = require('./config/system-life');
 const NodeHog = require('nodehog');
 
 app.use(config.middlewares.healthMid);
 app.use('/', config.routers);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); 
-
-app.get('/fahrenheit/:valor/celsius', (req, res) => {
-
-    let valor = req.params.valor;
-    let celsius = (valor - 32) * 5 / 9;
-    res.json({ "celsius": celsius, "maquina": os.hostname() });
-});
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); 
 
 app.get('/echo/:msg', (req, res) => {
     let password = 'teste';
     let msg = req.params.msg;
-    res.json({ "txt-input": msg, "maquina": os.hostname() });
+    res.json({ "txt-input": msg, "hostname": os.hostname() });
+});
+
+app.get('/secret/:msg', (req, res) => {
+    let password = 'cochilocachimbocai';
+    let msg = req.params.msg;
+    if (msg == password) {
+        res.statusCode = 200;
+        return res.send('');
+    } else {
+        res.statusCode = 500;
+        return res.send('');
+    }  
+    
+    res.json({ "txt-input": msg, "hostname": os.hostname() });
+});
+
+app.get('/fahrenheit/:value/celsius', (req, res) => {
+
+    let value = req.params.value;
+    let celsius = (value - 32) * 5 / 9;
+    res.json({ "celsius": celsius, "hostname": os.hostname() });
 });
 
 app.get('/swagger.yaml', (req, res) => {
-    res.download(__dirname +'/swagger.yaml');
+    res.download(__dirname +'docs/swagger.yaml');
 });
 
 app.get('/openapi.yaml', (req, res) => {
-    res.download(__dirname +'/openapi.yaml');
+    res.download(__dirname +'docs/openapi.yaml');
 });
 
-app.get('/celsius/:valor/fahrenheit', (req, res) => {
+app.get('/celsius/:value/fahrenheit', (req, res) => {
 
-    let valor = req.params.valor;
-    let fahrenheit = (valor * 9 / 5) + 32;
-    res.json({ "fahrenheit": fahrenheit, "maquina": os.hostname() });
+    let value = req.params.value;
+    let fahrenheit = (value * 9 / 5) + 32;
+    res.json({ "fahrenheit": fahrenheit, "hostname": os.hostname() });
 });
 
-app.get('/temperatura/fahrenheitparacelsius/:valor', (req, res) => {
+app.get('/temperature/fahrenheitparacelsius/:value', (req, res) => {
 
-    let valor = req.params.valor;
-    let celsius = (valor - 32) * 5 / 9;
-    res.json({ "celsius": celsius, "maquina": os.hostname() });
+    let value = req.params.value;
+    let celsius = (value - 32) * 5 / 9;
+    res.json({ "celsius": celsius, "hostname": os.hostname() });
 });
 
-app.get('/temperatura/celsiusparafahrenheit/:valor', (req, res) => {
+app.get('/temperature/celsiusparafahrenheit/:value', (req, res) => {
 
-    let valor = req.params.valor;
-    let fahrenheit = (valor * 9 / 5) + 32;
-    res.json({ "fahrenheit": fahrenheit, "maquina": os.hostname() });
+    let value = req.params.value;
+    let fahrenheit = (value * 9 / 5) + 32;
+    res.json({ "fahrenheit": fahrenheit, "hostname": os.hostname() });
 });
 
-app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/:ciclos', (req, res) => {
+app.get('*', (req, res) => {
+    res.redirect('/docs');
+});
 
-    const elemento = req.params.elemento;
-    const tempoStress = req.params.tempoStress * 1000;
-    const tempoFolga = req.params.tempoFolga * 1000;
-    const ciclos = req.params.ciclos;
-    new NodeHog(elemento, tempoStress, tempoFolga, ciclos).start();
-    res.json({"status": "Mission Accomplished" , "maquina": os.hostname() });
+app.put('/stress/:resource/time/:time/interval/:interval/cycles/:cycles', (req, res) => {
+
+    const resource = req.params.resoruce;
+    const time = req.params.time * 1000;
+    const interval = req.params.interval * 1000;
+    const cycles = req.params.cycles;
+    new NodeHog(resource, time, interval, cycles).start();
+    res.json({"status": "Mission Accomplished" , "hostname": os.hostname() });
 });
 
 app.listen(8080, () => {
-    console.log("Servidor: rodando na porta 8080, vai que vai");
+    console.log("Server:", os.hostname(), " serving at port 8080");
 });

@@ -1,0 +1,280 @@
+swagger: "2.0"
+info:
+  description: "Temperature conversion API"
+  version: "1.0.3"
+  title: "Temperature conversion API"
+  contact:
+    email: "bruno.botlho.br@gmail.com"
+tags:
+  - name: "Temperature"
+    description: Temperature conversion resources.
+  - name: "House Keeping"
+    description: House Keeping resources.
+  - name: "Misc"
+    description: Other Stuff.
+paths:
+  /fahrenheit/{value}/celsius:
+    get:
+      tags: 
+        - "Temperature"
+      description: "Convert from Fahrenheit to Celsius"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "value"
+        in: "path"
+        description: "value that will be converted"
+        required: true
+        type: "number"
+      responses:
+        "200":
+          description: "Conversion result"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/temperature"
+        "400":
+          description: "Bad Input Parameter"
+
+  /celsius/{value}/fahrenheit:
+    get:
+      tags: 
+        - "Temperature"
+      description: "Convert from Celsius to Fahrenheit"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "value"
+        in: "path"
+        description: "value that will be converted"
+        required: true
+        type: "number"
+      responses:
+        "200":
+          description: "Conversion result"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/temperature"
+        "400":
+          description: "Bad Input Parameter"
+
+  /ready:
+    get:
+      tags: 
+        - "House Keeping"
+      description: "Is the Node ready to operate? It retuns yes if it is OK."
+      produces:
+      - "application/json"   
+      responses:
+        "200":
+          description: "ready"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ready"
+        "500":
+          description: "No ready yet"
+
+  /health:
+    get:
+      tags: 
+        - "House Keeping"
+      description: "Is the Node health to operate? It retuns yes if it is OK."
+      produces:
+      - "application/json"   
+      responses:
+        "200":
+          description: "ready"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ready"
+        "500":
+          description: "Node isn't health"
+
+  /unhealth:
+    put:
+      tags: 
+        - "House Keeping"
+      description: "It makes the node unhealth"
+      produces:
+      - "application/json"   
+      responses:
+        "200":
+          description: "Node isn't health"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ready"
+        "500":
+          description: "It wasn't possible change the Node status"
+
+  //unreadyfor/{time}:
+    put:
+      tags: 
+        - "House Keeping"
+      description: "It makes the node unready for X seconds"
+      produces:
+      - "application/json" 
+      parameters:  
+      - name: "time"
+        in: "path"
+        description: "Time in Seconds"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Node isn't health for the requested amount of time"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ready"
+        "500":
+          description: "It wasn't possible change the Node health status"
+
+  /stress/{resource}/time/{time}/interval/{interval}/cycles/{cycles}:
+    put:
+      tags: 
+        - "House Keeping"
+      description: "Used to create scheduled stress tests on a given target. Use cases include testing program performance under max CPU or Memory load, testing recovery from max load, and testing virtual autoscaling features such as the Kubernetes horizontal pod autoscaler."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resource"
+        in: "path"
+        description: "The type of resource to stress (memory | cpu)"
+        required: true
+        type: "string"
+      - name: "time"
+        in: "path"
+        description: "The length of the stress period in seconds"
+        required: true
+        type: "number"
+      - name: "interval"
+        in: "path"
+        description: "he length of the relief period in seconds"
+        required: true
+        type: "number"
+      - name: "cycles"
+        in: "path"
+        description: "The number of cycles to complete before NodeHog exits (1 cycle = 1 lifespan + 1 deathspan)"
+        required: true
+        type: "number"     
+      responses:
+        "200":
+          description: "Retorno"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/status"
+        "400":
+          description: "Bad Input Parameter"
+
+  /echo/{msg}:
+    get:
+      tags: 
+        - "Misc"
+      description: "Return a message"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "msg"
+        in: "path"
+        description: "Message"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Message"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/msg"
+        "400":
+          description: "Bad Input Parameter"
+
+  /secret/{secret}:
+    get:
+      tags: 
+        - "Misc"
+      description: "Answer yes, if you get the secret right."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "secret"
+        in: "path"
+        description: "Secret Word"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Sucess, you know the secret"
+        "400":
+          description: "Fil, you don't know the secret"
+
+definitions:
+  temperature:
+    type: "object"
+    required:
+    - "value"
+    properties:
+      value:
+        type: "number"
+        example: 500.0
+  ready:
+    type: "object"
+    required:
+    - "array"
+    properties:
+      value:
+        type: "string"
+        example: "yes"
+  msg:
+    type: "object"
+    required:
+    - "msg"
+    properties:
+      value:
+        type: "string"
+        example: Azeitona
+  status:
+    type: "object"
+    required:
+    - "status"
+    properties:
+      value:
+        type: "string"
+        example: Mission Accomplished
+  resource:
+    type: "object"
+    required:
+    - "msg"
+    properties:
+      value:
+        type: "string"
+        example: cpu
+  time:
+    type: "object"
+    required:
+    - "msg"
+    properties:
+      value:
+        type: "number"
+        example: 20
+  interval:
+    type: "object"
+    required:
+    - "msg"
+    properties:
+      value:
+        type: "number"
+        example: 1
+  cycles:
+    type: "object"
+    required:
+    - "msg"
+    properties:
+      value:
+        type: "number"
+        example: 2
