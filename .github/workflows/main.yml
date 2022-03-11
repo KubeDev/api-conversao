@@ -1,4 +1,3 @@
-name: CI-CD
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
@@ -46,4 +45,13 @@ jobs:
     - name: Create deployment
       uses: okteto/apply@master
       with:
-        manifest: k8s/deployment.yaml
+        manifest: .k8s/deployment.yaml
+
+  QA:
+    needs: [CD]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download Code
+      uses: actions/checkout@v2
+    - name: QA tests
+      run: chmod +x .test/qa.sh; .test/qa.sh
