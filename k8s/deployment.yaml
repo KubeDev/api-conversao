@@ -33,10 +33,10 @@ spec:
           httpGet:
             path: /ready
             port: 8080
-          initialDelaySeconds: 5
+          initialDelaySeconds: 2
           timeoutSeconds: 1
           successThreshold: 1
-          failureThreshold: 1
+          failureThreshold: 13
         resources:
           requests:
             cpu: "100m"
