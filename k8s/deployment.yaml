@@ -60,6 +60,7 @@ spec:
 #  type: LoadBalancer
 
 #Okteto
+apiVersion: v1
 kind: Service
 metadata:
   name: api-service
