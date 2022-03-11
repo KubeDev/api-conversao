@@ -18,12 +18,12 @@ jobs:
     steps:
       - name: Download Code
         uses: actions/checkout@v2
-      - name: Docker Login
+      - name: DockerHub Login
         uses: docker/login-action@v1.10.0      
         with:
           username: ${{ secrets.DOCKERHUB_LOGIN }}
           password: ${{ secrets.DOCKERHUB_PASS }}
-      - name: Build and push Docker images
+      - name: Build and push Docker image
         uses: docker/build-push-action@v2.6.1
         with: 
           context: .
@@ -38,14 +38,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: [CI]
     steps:
-      - uses: actions/checkout@v2
-      - name: Kubernetes set context
-        uses: Azure/k8s-set-context@v1.1
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.K8S }}
-      - name: Deploy K8s
-        uses: Azure/k8s-deploy@v1
-        with:        
-          manifests: |
-            k8s/deployment.yaml
+
+    - name: Okteto Login
+      uses: okteto/login@master
+      with:
+        token: ${{ secrets.K8S }}
+    
+    - name: Activate K8s Cluster
+      uses: okteto/namespace@master
+      with:
+        name: brunobotelhobr
+
+    - name: Create deployment
+      uses: okteto/apply@master
+      with:
+        manifest: k8s/deployment.yaml
