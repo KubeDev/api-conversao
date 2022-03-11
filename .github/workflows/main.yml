@@ -15,7 +15,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_LOGIN }}
           password: ${{ secrets.DOCKERHUB_PASS }}
-      - name: Build and push Docker image
+      - name: Build Artefact
         uses: docker/build-push-action@v2.6.1
         with: 
           context: .
