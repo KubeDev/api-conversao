@@ -47,7 +47,7 @@ jobs:
     - name: Activate K8s Cluster
       uses: okteto/namespace@master
       with:
-        name: brunobotelhobr
+        namespace: brunobotelhobr
 
     - name: Create deployment
       uses: okteto/apply@master
