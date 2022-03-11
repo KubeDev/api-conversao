@@ -1,3 +1,7 @@
+
+# To Access
+[Kubernets Loab Balancer](https://api-service-brunobotelhobr.cloud.okteto.net/)
+
 # To run
     npm install
     node index.js
@@ -6,7 +10,7 @@
 #To Force down on application
     curl -v -X PUT http://localhost:8080/unhealth
 
-#To Force down on application
+#To Force down for some time on application
     curl -v -X PUT http://localhost:8080/unreadyfor/30
 
 #To Stresstest
