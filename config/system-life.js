@@ -22,29 +22,29 @@ router.get('/ready', (req, res) => {
    
     if (isRead()) {
         res.statusCode = 200;
-        return res.send('Ok');
+        res.json({ "value": "yes" });  
     } else {
         res.statusCode = 500;
-        return res.send('');
+        res.json({ "value": "no" });  
     }   
 });
 
 router.get('/health', (req, res) => {
-   
-    res.send("OK");
+    res.json({ "value": "yes" });  
 });
 
 router.put('/unhealth', (req, res) => {
 
     isHealth = false;
-    res.send("OK");
+    res.json({ "value": "yes" });  
 });
 
 router.put('/unreadyfor/:seconds', (req, res) => {
     
-    const dado = new Date(new Date(Date.now()).getTime() + (1000 * req.params.seconds));
-    readTime = dado;    
-    res.send("OK");
+    const load = new Date(new Date(Date.now()).getTime() + (1000 * req.params.seconds));
+    readTime = load;  
+    res.statusCode = 200;  
+    res.json({ "value": "yes" });  
 });
 
 var healthMid = function (req, res, next) {

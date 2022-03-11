@@ -24,7 +24,7 @@ app.get('/secret/:msg', (req, res) => {
         res.statusCode = 200;
         return res.send('');
     } else {
-        res.statusCode = 500;
+        res.statusCode = 400;
         return res.send('');
     }  
     
