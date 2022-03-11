@@ -63,8 +63,8 @@ app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/
     res.json({"status": "Mission Accomplished" , "maquina": os.hostname() });
 });
 
-app.get('*', function(req, res) {
-    res.redirect('/api-docs');
+app.get('/ready', (req, res) => {
+    res.json({ ""status": "Up and Running" , "maquina": os.hostname()  });
 });
 
 app.listen(8080, () => {
