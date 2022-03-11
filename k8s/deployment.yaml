@@ -46,17 +46,30 @@ spec:
             memory: "64Mi"
 
 --- 
-apiVersion: v1
+#Local K8s
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: api-service
+#spec:
+#  selector:
+#    app: api
+#  ports:
+#  - port: 32080
+#    targetPort: 8080
+#  type: LoadBalancer
+
+#Okteto
 kind: Service
 metadata:
   name: api-service
 spec:
+  type: LoadBalancer
   selector:
     app: api
   ports:
-  - port: 32080
-    targetPort: 8080
-  type: LoadBalancer
+    - name: http
+      port: 8080
 
 --- 
 apiVersion: autoscaling/v1
